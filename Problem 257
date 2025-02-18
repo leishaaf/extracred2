@@ -1,0 +1,60 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<String> binaryTreePaths(TreeNode root) {
+        ArrayList<String> nodeList = new ArrayList<>();
+        if(root == null){ // deal with an empty case
+            return nodeList;
+        }
+        getPath(root, "", nodeList); // the result / path starts off empty 
+        return nodeList;
+    }
+    // recursive function that builds the path by transversal 
+    public void getPath(TreeNode root, String result, List<String> nodeList){
+        if(root == null){
+            return;
+        }
+
+        if(result.isEmpty()){ // when we're at the root (special case)
+            result += Integer.toString(root.val);
+        }else{
+            result += "->" + Integer.toString(root.val);
+        }
+        if(root.left == null && root.right == null){ // reaching the end of the tree
+            nodeList.add(result); // add to the list once we reach the end of a path
+            return;
+        }
+        getPath(root.right, result, nodeList);
+        getPath(root.left, result, nodeList);
+    }
+}
+
+//PROBLEM DESCRIPTION (EASY)
+Given the root of a binary tree, return all root-to-leaf paths in any order.
+
+A leaf is a node with no children.
+
+ 
+
+Example 1:
+
+
+Input: root = [1,2,3,null,5]
+Output: ["1->2->5","1->3"]
+Example 2:
+
+Input: root = [1]
+Output: ["1"]
